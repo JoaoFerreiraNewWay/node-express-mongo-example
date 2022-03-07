@@ -1,0 +1,23 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+
+  mongo:
+    container_name: mongo-test
+    image: mvertes/alpine-mongo:4.0.6-1
+    # image: mongo:4-xenial
+    restart: unless-stopped
+    #    command: --replSet 'rs0' --bind_ip_all
+    hostname: mongo
+    ports:
+      - "27017:27017"
+    logging:
+      driver: none
+    entrypoint: ["/usr/bin/mongod", "--bind_ip_all"]
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 10s
