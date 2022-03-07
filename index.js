@@ -1,4 +1,5 @@
 const express = require('express')
+require('newrelic');
 const bodyParser = require('body-parser')
 const { init } = require('./db')
 const routes = require('./routes')
